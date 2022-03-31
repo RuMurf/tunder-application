@@ -54,7 +54,5 @@ try:
 except:
     target_width = default_target_width
 
-try:
+if __name__ == "__main__":
     main(int(footprint), int(target_start), int(target_height), int(target_width))
-except:
-    exit(1)
