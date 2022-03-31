@@ -1,5 +1,9 @@
 from utils import *
+from database_access import *
+from sys import argv
+import json
 
+# reference
 SAMPLE_RATE = 44100
 FOOTPRINT_SIZE = 30
 POINT_EFFICIENCY = 0.8
@@ -8,36 +12,46 @@ TARGET_T = 1.8
 TARGET_F = 4000
 FFT_WINDOW_SIZE = 0.2
 
-sample_rates = [44100]
-footprint_sizes = [200]
-target_heights = [4000]
+# defaults
+default_footprint = 100
+default_target_start = 1
+default_target_height = 4000
+default_target_width = 6
 
+def main(footprint, target_start, target_height, target_width):
+    # temporary hard-coded parameters for testing
+    directory = "The Number Of The Beast/"
+    files = ["01 Invaders.wav", "02 Children Of The Damned.wav"]
+    id = 1
 
-directory = "The Number Of The Beast/"
-files = ["01 Invaders.wav", "02 Children Of The Damned.wav"]
-file = files[1]
+    hashes = []
+    for file in files:
+        hashes += create_fingerprint(directory+file, footprint_size=footprint, target_height=target_height, target_start=target_start, target_width=target_width, sample_rate=44100)
+        id += 1
 
-id = 1
-hashes = []
-for file in files:
-    hashes += create_fingerprint(directory+file, track_id=id, footprint_size=200, target_height=4000, target_start=1, target_width=6, sample_rate=44100)
-    id += 1
-save_hashes(hashes, "hashes")
+    # write hashes for future reading
+    with open("edata/db_hashes/hashes [fp="+str(footprint)+",ts="+str(target_start)+",th="+str(target_height)+",tw="+str(target_width)+"].json", "w") as file:
+        file.write(json.dumps(hashes))
+        file.close()
+    print("Hashes Generated: "+str(len(hashes)))
 
-# from madmom.audio import Signal
-# from madmom.audio.signal import FramedSignal
-# from madmom.audio.stft import STFT
-# from madmom.audio.spectrogram import Spectrogram
-# import numpy as np
-#
-# signal = Signal(directory+file, num_channels=1, sample_rate=44100)
-# print("samples in signal: "+str(signal.size))
-# print("Signal length (seconds): "+str(signal.size/44100))
-# framed_signal = FramedSignal(signal, hop_size=441, frame_size=0.2*44100)
-# print("frames in signal: "+str(framed_signal.num_frames))
-# print("frames per second: "+str(framed_signal.num_frames/275.7))
-# stft = STFT(framed_signal)
-# print("samples in stft: "+str(stft.size))
-# print("sample rate: "+str(stft.size/275.7))
-# spectrogram = Spectrogram(stft)
-# print("samples in spectrogram: "+str(spectrogram.size))
+# take command line arguments if given,
+# else use defaults
+try:
+    footprint = argv[1]
+except:
+    footprint = default_footprint
+try:
+    target_start = argv[2]
+except:
+    target_start = default_target_start
+try:
+    target_height = argv[3]
+except:
+    target_height = default_target_height
+try:
+    target_width = argv[4]
+except:
+    target_width = default_target_width
+
+main(int(footprint), int(target_start), int(target_height), int(target_width))

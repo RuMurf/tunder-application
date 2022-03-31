@@ -160,5 +160,5 @@ def save_hashes(hashes, filename):
 def read_hashes(filename):
     import json
 
-    with open("edata/"+filename+".json") as file:
+    with open("edata/"+filename+".json", "r") as file:
         return json.load(file)
