@@ -3,9 +3,9 @@ import add_fingerprint_to_db
 
 parameters = {
     "footprint": [500, 300, 100, 50],
-    "target_start": [1],
-    "target_height": [4000],
-    "target_width": [6]
+    "target_start": [1, 0.5, 0.05],
+    "target_height": [1000, 2000, 3000, 4000],
+    "target_width": [1.8, 2, 4, 6]
 }
 
 for footprint in parameters["footprint"]:
