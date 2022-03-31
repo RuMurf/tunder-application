@@ -1,6 +1,7 @@
 from utils import *
 from sys import argv
 import json
+from os.path import exists
 
 # reference
 SAMPLE_RATE = 44100
@@ -18,6 +19,11 @@ default_target_height = 4000
 default_target_width = 6
 
 def main(footprint, target_start, target_height, target_width):
+    if exists("edata/db_hashes/hashes [fp=" + str(footprint) + ",ts=" + str(target_start) + ",th=" + str(
+            target_height) + ",tw=" + str(target_width) + "].json"):
+        print("edata/db_hashes/hashes [fp="+str(footprint)+",ts="+str(target_start)+",th="+str(target_height)+",tw="+str(target_width)+"].json already exists!!")
+        return
+
     # temporary hard-coded parameters for testing
     directory = "The Number Of The Beast/"
     files = ["01 Invaders.wav", "02 Children Of The Damned.wav"]
@@ -29,6 +35,7 @@ def main(footprint, target_start, target_height, target_width):
         id += 1
 
     # write hashes for future reading
+
     with open("edata/db_hashes/hashes [fp="+str(footprint)+",ts="+str(target_start)+",th="+str(target_height)+",tw="+str(target_width)+"].json", "w") as file:
         file.write(json.dumps(hashes))
         file.close()
