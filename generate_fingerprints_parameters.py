@@ -11,6 +11,6 @@ parameters = {
 for footprint in parameters["footprint"]:
     for target_start in parameters["target_start"]:
         for target_height in parameters["target_height"]:
-            for target_width in parameters["target_height"]:
+            for target_width in parameters["target_width"]:
                 save_sample_fingerprint.main(footprint, target_start, target_height, target_width)
                 add_fingerprint_to_db.main(footprint, target_start, target_height, target_width)
