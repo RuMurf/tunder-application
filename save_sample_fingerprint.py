@@ -3,8 +3,8 @@ import json
 from sys import argv
 
 def main(footprint, target_start, target_height, target_width):
-    print("footprint: "+str(footprint)+", target start: "+str(target_start)+", targer height: "+str(target_height)+", target width: "+str(target_width))
-    sample = "C:/Users/Ruairi/IdeaProjects/pythonProject/Recording_2.wav"
+    print("footprint: "+str(footprint)+", target start: "+str(target_start)+", target height: "+str(target_height)+", target width: "+str(target_width))
+    sample = "Recording_2.wav"
     sample_fingerprint = create_fingerprint(sample, footprint_size=footprint, target_start=target_start,
                                             target_height=target_height, target_width=target_width, sample_rate=44100)
     # write hashes for future reading
