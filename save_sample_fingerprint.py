@@ -17,5 +17,7 @@ def main(footprint, target_start, target_height, target_width):
 
 # take command line arguments if given,
 # else use defaults
-
-main(int(argv[1]), int(argv[2]), int(argv[3]), int(argv[4]))
+try:
+    main(int(argv[1]), int(argv[2]), int(argv[3]), int(argv[4]))
+except:
+    exit(1)
